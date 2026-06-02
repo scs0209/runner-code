@@ -1,5 +1,6 @@
 export type CommandContext = {
 	exit: () => void;
+	navigate: (path: string) => void;
 };
 
 export type Command = {
