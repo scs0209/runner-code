@@ -1,0 +1,50 @@
+---
+description: 프로젝트 기본 에이전트 규칙
+alwaysApply: true
+---
+
+# 기본 규칙
+
+명시적으로 요청하지 않으면 아래 작업을 하지 않는다. 작업에 **필수**인 경우(예: 사용자가 포맷 설정을 요청해 Biome 추가)만 예외.
+
+## Cursor Rule·문서
+
+- `.cursor/rules/`에 새 rule(`.mdc`), skill, hook 생성
+- README, `docs/`, ADR 등 문서 파일 신규 작성·대량 수정
+- 포맷·린트·저장 동작은 `biome.json`, `.vscode/settings.json` 등 **설정 파일**로만 관리
+
+## Git·원격
+
+- `git commit`, `git push`, force push, `git commit --amend`
+- 브랜치 생성·삭제, PR/MR 생성(`gh pr create` 등)
+- `rebase`, `cherry-pick`, `stash`, `git clean` 등 히스토리·작업 트리 조작
+- 이미 원격에 올라간 커밋의 작성자·메시지 변경
+- `git config` 변경
+- `.env`, credentials 등 시크릿 파일 커밋
+
+## 설정·환경 (워크스페이스 밖)
+
+- Cursor/VS Code **전역** 설정 (`User/settings.json`)
+- zsh·프롬프트 전역 설정 (`~/.zshrc`, `~/.p10k.zsh` 등)
+- 이 저장소(`runnercode`) 밖 경로의 파일 수정
+
+## 의존성·도구
+
+- `bun add` / `package.json`에 패키지 추가 (작업에 필수일 때만)
+- ESLint·Prettier 등 Biome과 겹치는 포맷터·린터 추가
+
+## 코드
+
+- 요청 범위 밖 파일 수정, 대규모 리팩터, FSD 레이어 대이동
+- 테스트·예제·장문 주석 블록 선제 추가
+- 불필요한 추상화·헬퍼·과한 에러 처리 추가
+
+## 실행·데이터
+
+- DB 마이그레이션·시드·프로덕션 API 호출
+- `rm -rf` 등 되돌리기 어려운 명령
+
+## 권장
+
+- 변경은 요청 범위에 맞춰 최소 diff로 한다.
+- 커밋·push·PR은 사용자가 요청할 때만 수행한다.

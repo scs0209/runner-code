@@ -1,0 +1,16 @@
+{
+  "name": "runner-code",
+  "version": "1.0.0",
+  "workspaces": [
+    "packages/*"
+  ],
+  "scripts": {
+    "dev:cli": "bun run --watch packages/cli/src/index.tsx",
+    "format": "biome format --write .",
+    "lint": "biome lint .",
+    "check": "biome check --write ."
+  },
+  "devDependencies": {
+    "@biomejs/biome": "^2.4.15"
+  }
+}
