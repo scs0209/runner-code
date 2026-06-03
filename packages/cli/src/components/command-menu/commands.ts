@@ -6,7 +6,10 @@ export const COMMANDS: Command[] = [
 		description: "Start a new conversation",
 		value: "/new",
 		action: (ctx) => {
-			ctx.navigate("/");
+			ctx.toast.show({
+				message: "새 대화가 시작되었습니다.",
+			});
+			// ctx.navigate("/");
 		},
 	},
 	{

@@ -21,9 +21,14 @@ ID 규칙:
 
 ## Next
 
-- [ ] `B-002` `commands.ts` stub action 실제 기능 연결  
+- [x] `B-006` Toast Provider·UI·명령 연동 골격  
+  ref: `specs/project-setup-component-architecture.md`  
+  완료: `packages/cli/src/providers/toast/`, `ToastProvider` in `packages/cli/src/index.tsx`, `CommandContext.toast`, `InputBar`에서 `useToast` 전달, `/new` → `toast.show`
+- [ ] `B-007` Toast UI·동작 정교화 (split border, z-index/겹침, variant별 스타일)  
   ref: `specs/project-setup-component-architecture.md`
-- [ ] `B-003` `InputBar` 명령/일반 입력 제출 UX 정교화 (에러/로딩/disabled)  
+- [ ] `B-002` `commands.ts` stub action 실제 기능 연결 (`/new` 토스트 제외 나머지)  
+  ref: `specs/project-setup-component-architecture.md`
+- [ ] `B-003` `InputBar` 명령/일반 입력 제출 UX 정교화 (에러/로딩/disabled, 실패 시 `toast` 피드백)  
   ref: `specs/project-setup-component-architecture.md`
 - [ ] `B-004` `CommandMenu` 접근성/키보드 UX 추가 검증  
   ref: `specs/project-setup-component-architecture.md`

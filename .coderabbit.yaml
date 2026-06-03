@@ -1,0 +1,75 @@
+# 리뷰·채팅 응답 언어 (ISO 코드)
+language: ko-KR
+
+# 리뷰어 톤·말투 (최대 250자). 리뷰 코멘트·채팅의 스타일 가이드
+tone_instructions: |
+  1. 시니어 개발자 톤으로 리뷰한다.
+  2. 단순히 문제를 지적하는 것에 그치지 않고, 왜 문제인지 원인까지 설명한다.
+  3. 더 나은 코드를 작성할 수 있도록 관련 레퍼런스나 공식 문서를 함께 제안한다.
+  4. 잘된 부분은 가볍고 유쾌하게 칭찬한다.
+
+# PR 코드 리뷰 관련 설정
+reviews:
+  # 리뷰 강도: assertive(꼼꼼·피드백 많음) / chill(완화)
+  profile: chill
+  # 워크스루를 접을 수 있는(collapsible) 마크다운 섹션으로 출력
+  collapse_walkthrough: true
+  # PR 제목 자동 생성 시 따를 커밋·제목 규칙
+  auto_title_instructions: |
+    Conventional Commits 형식. type/scope는 영문 소문자, 제목은 한국어 명령형(…함/…추가/…수정), 제목 끝 마침표 금지.
+    예: feat(runner-code): CLI 입력 바 키 바인딩 추가
+    type: feat, fix, docs, style, refactor, test, chore, perf
+  # 리뷰 대상에서 제외할 경로 (glob, ! 접두로 제외)
+  path_filters:
+    - "!**/node_modules/**" # 의존성 디렉터리
+    - "!bun.lock" # lockfile
+    - "!.cursor/**" # Cursor 규칙·스킬·에이전트 설정
+    - "!.agents/**" # 에이전트 스킬
+    - "!skills-lock.json" # 스킬 lock
+    - "!**/.vscode/**" # 에디터 로컬 설정
+  # 경로별 추가 리뷰 지침 (glob → instructions)
+  path_instructions:
+    # 애플리케이션·패키지 소스
+    - path: "packages/**"
+      instructions: |
+        - Bun 모노레포(packages/*). 포맷·린트는 Biome(biome.json)만 사용. ESLint/Prettier 도입·제안 금지.
+        - 파일명 kebab-case, 컴포넌트 PascalCase named export, 파일당 UI 컴포넌트 하나(파일 stem과 컴포넌트명 1:1).
+        - 파일·상수명은 역할·도메인 기준. 위젯·구현체 이름(textarea, opentui 등)을 파일명에 넣지 않음.
+        - export 상수는 SCREAMING_SNAKE_CASE. 공유 상수는 consts/에 둠.
+        - 요청 범위 밖 수정, 대규모 리팩터, 불필요한 추상화·헬퍼·과한 에러 처리·선제 테스트·장문 주석 지양.
+        - 의존성 추가(bun add)는 작업에 필수일 때만.
+    # 포맷·린트 단일 설정
+    - path: "biome.json"
+      instructions: |
+        - 탭 들여쓰기, JS/TS quoteStyle double. Biome와 겹치는 다른 포맷터·린터 설정 추가 제안 금지.
+    # 스펙·백로그·README 등 문서
+    - path: "**/*.md"
+      instructions: |
+        - specs/는 feature 계약, backlog/는 후속 작업 단일 소스. 스펙·백로그 역할 혼동 지적.
+        - 명시적 요청 없는 대량 문서·README 확장은 범위 밖 변경으로 간주.
+
+  # PR push 시 자동 리뷰
+  auto_review:
+    # 자동 리뷰 on/off
+    enabled: true
+    # 추가 push마다 증분 리뷰
+    auto_incremental_review: true
+    # Draft PR도 리뷰할지 (false = 일반 PR만)
+    drafts: false
+
+  # PR 마무리 작업( docstring 생성, 코드 단순화 등 )
+  finishing_touches:
+    # 변경 함수에 docstring 자동 생성·PR 제안
+    docstrings:
+      enabled: false
+
+# 팀 규칙·문서를 리뷰에 반영
+knowledge_base:
+  code_guidelines:
+    # .cursor/rules 등 가이드라인 파일을 읽어 리뷰에 적용
+    enabled: true
+    # 스캔할 가이드라인 파일 경로
+    filePatterns:
+      - ".cursor/rules/*.mdc" # 커밋·네이밍·기본 규칙
+      - "specs/*.md" # feature 스펙
+      - "biome.json" # 포맷·린트 기준
