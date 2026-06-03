@@ -14,6 +14,22 @@ type UseCommandMenuReturn = {
 	setSelectedIndex: (index: number) => void;
 };
 
+/**
+ * Manage state and keyboard interactions for a slash-command menu used with text input.
+ *
+ * Tracks the current input value, whether the menu is visible, the highlighted command index,
+ * and a scroll container ref; provides handlers to update input, resolve a selected command,
+ * and synchronize scrolling when navigating with the keyboard.
+ *
+ * @returns An object containing:
+ * - `showCommandMenu`: whether the command menu is visible
+ * - `commandQuery`: the input text after a leading `/` when the menu is open, otherwise `""`
+ * - `selectedIndex`: the currently highlighted command index
+ * - `scrollRef`: a ref to the scrollable container used to keep the highlighted item in view
+ * - `handleContentChange`: a function to update the input and toggle the menu based on the `/` prefix
+ * - `resolveCommand`: a function that returns the command at a given index (and closes the menu if found)
+ * - `setSelectedIndex`: setter to update the highlighted index
+ */
 export function useCommandMenu(): UseCommandMenuReturn {
 	const [textValue, setTextValue] = useState("");
 	const [selectedIndex, setSelectedIndex] = useState(0);

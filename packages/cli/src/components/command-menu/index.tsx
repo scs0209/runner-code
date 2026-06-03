@@ -20,6 +20,21 @@ type CommandMenuProps = {
 	onExecute: (index: number) => void;
 };
 
+/**
+ * Render a scrollable list of command suggestions filtered by the provided query.
+ *
+ * Shows up to eight items; when no commands match the query it displays a dimmed
+ * "No matching commands" message. Each list item highlights when its index
+ * matches `selectedIndex` and forwards pointer interactions via `onSelect` and
+ * `onExecute`.
+ *
+ * @param query - The input used to filter available commands
+ * @param selectedIndex - Index of the currently highlighted item within the filtered list
+ * @param scrollRef - Ref to the scroll container used to control or inspect scrolling
+ * @param onSelect - Called with an item's index when the mouse moves over that item
+ * @param onExecute - Called with an item's index when the item is activated via mouse down
+ * @returns The rendered command menu element
+ */
 export function CommandMenu({
 	query,
 	selectedIndex,
