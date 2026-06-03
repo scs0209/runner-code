@@ -2,6 +2,7 @@ import type { TextareaRenderable } from "@opentui/core";
 import { useRenderer } from "@opentui/react";
 import { useCallback, useEffect, useRef } from "react";
 import { EmptyBorder, INPUT_KEY_BINDINGS } from "../consts";
+import { useToast } from "../providers/toast";
 import { CommandMenu } from "./command-menu";
 import type { Command } from "./command-menu/types";
 import { useCommandMenu } from "./command-menu/use-command-menu";
@@ -16,6 +17,7 @@ export const InputBar = ({ onSubmit, disabled = false }: InputBarProps) => {
 	const textareaRef = useRef<TextareaRenderable>(null);
 	const onSubmitRef = useRef<() => void>(() => {});
 	const renderer = useRenderer();
+	const toast = useToast();
 
 	const {
 		showCommandMenu,
@@ -57,6 +59,7 @@ export const InputBar = ({ onSubmit, disabled = false }: InputBarProps) => {
 			if (command.action) {
 				command.action({
 					exit: () => renderer.destroy(),
+					toast,
 					navigate: (_path: string) => {
 						// 라우팅 레이어가 아직 없어 현재는 no-op 처리
 					},
@@ -65,7 +68,7 @@ export const InputBar = ({ onSubmit, disabled = false }: InputBarProps) => {
 				textarea.insertText(command.value + " ");
 			}
 		},
-		[renderer],
+		[renderer, toast],
 	);
 
 	const handleCommandExecute = useCallback(
